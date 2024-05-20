@@ -1,11 +1,15 @@
-Drew Clanton
+---
+title: "Stat 331 Final Project"
+format: 
+  html:
+    embed-resources: true
+    code-tools: true
+    toc: true
+editor: source
+---
+# Section 1: 
 
-Testing
-
-Nicolas Ramel
-
-Testing 2
-
-Tyler Kitchen
-
-Testing 3
+Written Components:
+Detailed data and variable description.
+Hypothesized relationship between the variables (and any outside references).
+Discussion of data cleaning process and decisions.
