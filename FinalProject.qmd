@@ -13,3 +13,16 @@ Written Components:
 Detailed data and variable description.
 Hypothesized relationship between the variables (and any outside references).
 Discussion of data cleaning process and decisions.
+
+```{r setup}
+library(tidyverse)
+```
+
+```{r download data}
+
+child_mortality <- read_csv("https://raw.githubusercontent.com/drewclanton/STAT331_Project/main/child_mortality_0_5_year_olds_dying_per_1000_born.csv")
+income <- read_csv('https://raw.githubusercontent.com/drewclanton/STAT331_Project/main/mincpcap_cppp.csv')
+```
+
+
+
