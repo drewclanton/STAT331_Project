@@ -25,7 +25,7 @@ Our hypothesis is that we will see an inverse relationship between each countrie
 
 # Section 1.1: Data Cleaning
 ```{r download data}
-
+#| include: false
 child_mortality <- read_csv("https://raw.githubusercontent.com/drewclanton/STAT331_Project/main/child_mortality_0_5_year_olds_dying_per_1000_born.csv")
 income <- read_csv('https://raw.githubusercontent.com/drewclanton/STAT331_Project/main/mincpcap_cppp.csv')
 ```
