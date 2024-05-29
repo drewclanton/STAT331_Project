@@ -30,9 +30,16 @@ child_mortality <- read_csv("https://raw.githubusercontent.com/drewclanton/STAT3
 income <- read_csv('https://raw.githubusercontent.com/drewclanton/STAT331_Project/main/mincpcap_cppp.csv')
 ```
 
+Our goal in data cleaning is looking to create clean and tidy data that we can easily analyze. First, we checked for any missing values in the data:
 ```{r}
 sum(is.na(income))
 sum(is.na(child_mortality))
+```
+We found that our daily income data set (income) has zero missing values, but our child mortality data set is missing 1800 entries. We will investigate this further:
+
+```{r}
+child_mortality2<-na.omit(child_mortality)
+
 ```
 
 
