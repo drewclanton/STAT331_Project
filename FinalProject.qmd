@@ -17,6 +17,8 @@ execute:
 ```{r setup}
 #| include: false
 library(tidyverse)
+library(gganimate)
+library(gifski)
 ```
  **Data and Variable Descriptions**:
  
@@ -79,3 +81,23 @@ data <- child_mortality |>
 ```
 
 In combining our data sets, we chose to only include entries that were present in the child mortality dataset with no missing values. Since our income data set has no missing values, we will not have to worry about any NAs in our data. We ended up with 185 countries in our final data set, meaning that we only removed 12 countries from the set for the reason of having no data about child_mortality. 
+
+# Section 2.1: Data Visualization 
+
+```{r}
+data |>
+  ggplot(mapping=aes(y=child_mortality,x=daily_income)) +
+  geom_point()
+```
+
+```{r}
+time<- data |>
+  mutate(year = as.integer(as.character(year))) |>
+  ggplot(mapping=aes(x=daily_income,y=child_mortality)) + 
+  geom_point() +
+  labs(title = 'Year: {frame_time}', x = 'Daily Inome', y = 'Child mortality') +
+  transition_time(year) +
+  ease_aes('linear') 
+animate(time,renderer=gifski_renderer())
+```
+
