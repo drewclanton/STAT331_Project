@@ -83,21 +83,29 @@ data <- child_mortality |>
 In combining our data sets, we chose to only include entries that were present in the child mortality dataset with no missing values. Since our income data set has no missing values, we will not have to worry about any NAs in our data. We ended up with 185 countries in our final data set, meaning that we only removed 12 countries from the set for the reason of having no data about child_mortality. 
 
 # Section 2.1: Data Visualization 
-
+Our first data visualization is a scatterplot that explores the relationship of child mortality and daily income over time. Each point on the plot represents a country's child mortality rate and daily income for an individual year. We do not see an exactly linear relationship, rather a slighly parabolic curve as child mortality rate decreases as daily income increases. There are few real outliers in this data, as most points are packed very tightly together.
 ```{r}
 data |>
   ggplot(mapping=aes(y=child_mortality,x=daily_income)) +
-  geom_point()
+  geom_point(color='steelblue') +
+  theme_classic() +
+  labs(title = "Child Mortality vs. Daily Income",
+       x = "Daily Income",
+       y = "Child Mortality")
 ```
-
+While the above graph shows us the relationship of daily income and child mortality over all years, we are curious to see how the relationship between daily income and child mortality has changed over time. Below, is an animated scatterplot that displays the relationship between child mortality and daily income by year. We see that as more time passes, child mortality rate drops, and daily income starts to move higher up. We see that daily income increases the most after 1960, while child mortality continues to get closer to 0.
 ```{r}
 time<- data |>
   mutate(year = as.integer(as.character(year))) |>
   ggplot(mapping=aes(x=daily_income,y=child_mortality)) + 
-  geom_point() +
-  labs(title = 'Year: {frame_time}', x = 'Daily Inome', y = 'Child mortality') +
+  geom_point(color='steelblue') +
+  labs(title = 'Child Mortality and Daily Income by Country Animated by Year: {frame_time}',
+       x = 'Daily Income',
+       y = 'Child mortality',
+       ) +
   transition_time(year) +
   ease_aes('linear') 
 animate(time,renderer=gifski_renderer())
 ```
 
+#Section 2.2: Linear Regression:
