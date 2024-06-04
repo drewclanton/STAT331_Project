@@ -19,6 +19,9 @@ execute:
 library(tidyverse)
 library(gganimate)
 library(gifski)
+library(knitr)
+library(kableExtra)
+
 ```
  **Data and Variable Descriptions**:
  
@@ -130,5 +133,20 @@ Intepretation of Coefficients:
 
 ```{r}
 
-```
+response_variance <- var(mod_data$avg_mortality)
+fitted_values <- fitted(mod)
+fitted_variance <- var(fitted_values)
+residuals <- resid(mod)
+residual_variance <- var(residuals)
 
+variances <- data.frame(
+  Measure = c("Response Variance", "Fitted Variance", "Residual Variance"),
+  Variance = c(response_variance, fitted_variance, residual_variance)
+)
+
+kable(variances, format = "html") |>
+  kable_styling()
+
+
+```
+  The r-squared value represents the proportion of the variability in the response variable that is explained by the explanatory variable. In our model, the r-squared value is 0.3229, which means that approximately 32.29% of the variability in child mortality rates is explained by the average daily income of the country for that year. This indicates that our model explains a statistically significant portion of the variability, supporting our hypothesis that there is an inverse relationship between child mortality rates and average daily income albeit moderately weak. However, it also indicates that there is still a substantial amount of variability (67.71%) that is not explained by the model, suggesting that other factors also play an important role in determining child mortality rates that are not represented in the relationship between these two variables.
