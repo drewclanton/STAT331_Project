@@ -83,7 +83,7 @@ data <- child_mortality |>
 In combining our data sets, we chose to only include entries that were present in the child mortality dataset with no missing values. Since our income data set has no missing values, we will not have to worry about any NAs in our data. We ended up with 185 countries in our final data set, meaning that we only removed 12 countries from the set for the reason of having no data about child_mortality. 
 
 # Section 2.1: Data Visualization 
-Our first data visualization is a scatterplot that explores the relationship of child mortality and daily income over time. Each point on the plot represents a country's child mortality rate and daily income for an individual year. We do not see an exactly linear relationship, rather a slighly parabolic curve as child mortality rate decreases as daily income increases. There are few real outliers in this data, as most points are packed very tightly together.
+Our first data visualization is a scatterplot that explores the relationship of child mortality and daily income over time. Each point on the plot represents a country's child mortality rate and daily income for an individual year. We do not see an exactly linear relationship, rather a slightly parabolic curve as child mortality rate decreases as daily income increases. There are few real outliers in this data, as most points are packed very tightly together.
 ```{r}
 data |>
   ggplot(mapping=aes(y=child_mortality,x=daily_income)) +
@@ -93,7 +93,7 @@ data |>
        x = "Daily Income",
        y = "Child Mortality")
 ```
-While the above graph shows us the relationship of daily income and child mortality over all years, we are curious to see how the relationship between daily income and child mortality has changed over time. Below, is an animated scatterplot that displays the relationship between child mortality and daily income by year. We see that as more time passes, child mortality rate drops, and daily income starts to move higher up. We see that daily income increases the most after 1960, while child mortality continues to get closer to 0.
+While the above graph shows us the relationship of daily income and child mortality over all years for all countries, we are curious to see how the relationship between daily income and child mortality has changed over time. Below, is an animated scatterplot that displays the relationship between child mortality and daily income by year. We see that as more time passes, child mortality rate drops, and daily income starts to move higher up. We see that daily income increases the most after 1960, while child mortality continues to get closer to 0.
 ```{r}
 time<- data |>
   mutate(year = as.integer(as.character(year))) |>
@@ -124,7 +124,6 @@ Intepretation of Coefficients:
  * $\beta_0$: when daily average income equals 0 in a country, on average child mortality rate per 1000 babies born will be 58.486. 
  * $\beta_0$: If daily average income in a country increases by 1 2017 U.S. dollar, then child mortality rate will decrease by 1.037 on average.
  
-   From the linear regression model, we first observe the negative relationship between average income and child mortality, in which higher income levels are associated with lower child mortality rates. The p-values for the slope and intercept are less than 0.001, indicating statistical significance for both coefficients. Also , the R squared value of 0.3229 indicates that approximately 32.29% of the variability in child mortality can be explained by the average income, suggesting that there are certainly other factors that contribute to variability in child mortality that is not captured in this model.
 # Section 2.3: Model Fit
 
 ```{r}
