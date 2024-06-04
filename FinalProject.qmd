@@ -124,6 +124,7 @@ Intepretation of Coefficients:
  * $\beta_0$: when daily average income equals 0 in a country, on average child mortality rate per 1000 babies born will be 58.486. 
  * $\beta_0$: If daily average income in a country increases by 1 2017 U.S. dollar, then child mortality rate will decrease by 1.037 on average.
  
+   From the linear regression model, we first observe the negative relationship between average income and child mortality, in which higher income levels are associated with lower child mortality rates. The p-values for the slope and intercept are less than 0.001, indicating statistical significance for both coefficients. Also , the R squared value of 0.3229 indicates that approximately 32.29% of the variability in child mortality can be explained by the average income, suggesting that there are certainly other factors that contribute to variability in child mortality that is not captured in this model.
 # Section 2.3: Model Fit
 
 ```{r}
