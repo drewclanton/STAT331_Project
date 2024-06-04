@@ -3218,6 +3218,7 @@ window.Quarto = {
   <li><a href="#section-1.1-data-cleaning-and-pivoting" id="toc-section-1.1-data-cleaning-and-pivoting" class="nav-link" data-scroll-target="#section-1.1-data-cleaning-and-pivoting">Section 1.1: Data Cleaning and Pivoting</a></li>
   <li><a href="#section-1.3-joining-datasets" id="toc-section-1.3-joining-datasets" class="nav-link" data-scroll-target="#section-1.3-joining-datasets">Section 1.3: Joining Datasets</a></li>
   <li><a href="#section-2.1-data-visualization" id="toc-section-2.1-data-visualization" class="nav-link" data-scroll-target="#section-2.1-data-visualization">Section 2.1: Data Visualization</a></li>
+  <li><a href="#section-2.2-linear-regression" id="toc-section-2.2-linear-regression" class="nav-link" data-scroll-target="#section-2.2-linear-regression">Section 2.2: Linear Regression:</a></li>
   </ul>
 </nav>
 </div>
@@ -3310,7 +3311,9 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>#Section 2.2: Linear Regression:</p>
+</section>
+<section id="section-2.2-linear-regression" class="level1">
+<h1>Section 2.2: Linear Regression:</h1>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -3333,7 +3336,12 @@ Multiple R-squared:  0.3229,    Adjusted R-squared:  0.3192
 F-statistic: 87.28 on 1 and 183 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
-<p><span class="math display">\[mortality=58.486 + -1.037  income + \epsilon\]</span></p>
+<p><span class="math display">\[mortality=58.486 + -1.037  income + \epsilon\]</span> Intepretation of Coefficients:</p>
+<ul>
+<li><p><span class="math inline">\(\beta_0\)</span>: when daily average income equals 0 in a country, on average child mortality rate per 1000 babies born will be 58.486.</p></li>
+<li><p><span class="math inline">\(\beta_0\)</span>: If daily average income in a country increases by 1 2017 U.S. dollar, then child mortality rate will decrease by 1.037 on average.</p>
+<p>From the linear regression model, we first observe the negative relationship between average income and child mortality, in which higher income levels are associated with lower child mortality rates. The p-values for the slope and intercept are less than 0.001, indicating statistical significance for both coefficients. Also , the R squared value of 0.3229 indicates that approximately 32.29% of the variability in child mortality can be explained by the average income, suggesting that there are certainly other factors that contribute to variability in child mortality that is not captured in this model. # Section 2.3: Model Fit</p></li>
+</ul>
 <!-- -->
 
 </section>
@@ -3910,7 +3918,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb5-120"><a href="#cb5-120" aria-hidden="true" tabindex="-1"></a><span class="fu">animate</span>(time,<span class="at">renderer=</span><span class="fu">gifski_renderer</span>())</span>
 <span id="cb5-121"><a href="#cb5-121" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb5-122"><a href="#cb5-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-123"><a href="#cb5-123" aria-hidden="true" tabindex="-1"></a>#Section 2.2: Linear Regression:</span>
+<span id="cb5-123"><a href="#cb5-123" aria-hidden="true" tabindex="-1"></a><span class="fu"># Section 2.2: Linear Regression:</span></span>
 <span id="cb5-124"><a href="#cb5-124" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-127"><a href="#cb5-127" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb5-128"><a href="#cb5-128" aria-hidden="true" tabindex="-1"></a>mod_data <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
@@ -3921,6 +3929,16 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb5-133"><a href="#cb5-133" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod)</span>
 <span id="cb5-134"><a href="#cb5-134" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb5-135"><a href="#cb5-135" aria-hidden="true" tabindex="-1"></a>$$mortality=58.486 + -1.037  income + \epsilon$$</span>
+<span id="cb5-136"><a href="#cb5-136" aria-hidden="true" tabindex="-1"></a>Intepretation of Coefficients: </span>
+<span id="cb5-137"><a href="#cb5-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-138"><a href="#cb5-138" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>$\beta_0$: when daily average income equals 0 in a country, on average child mortality rate per 1000 babies born will be 58.486. </span>
+<span id="cb5-139"><a href="#cb5-139" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>$\beta_0$: If daily average income in a country increases by 1 2017 U.S. dollar, then child mortality rate will decrease by 1.037 on average.</span>
+<span id="cb5-140"><a href="#cb5-140" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb5-141"><a href="#cb5-141" aria-hidden="true" tabindex="-1"></a>   From the linear regression model, we first observe the negative relationship between average income and child mortality, in which higher income levels are associated with lower child mortality rates. The p-values for the slope and intercept are less than 0.001, indicating statistical significance for both coefficients. Also , the R squared value of 0.3229 indicates that approximately 32.29% of the variability in child mortality can be explained by the average income, suggesting that there are certainly other factors that contribute to variability in child mortality that is not captured in this model.</span>
+<span id="cb5-142"><a href="#cb5-142" aria-hidden="true" tabindex="-1"></a><span class="fu"># Section 2.3: Model Fit</span></span>
+<span id="cb5-143"><a href="#cb5-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-146"><a href="#cb5-146" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-147"><a href="#cb5-147" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
