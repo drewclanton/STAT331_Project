@@ -8,7 +8,7 @@ format:
 editor: source
 execute: 
   error: true
-  echo: true
+  echo: false
   message: false
   warning: false
 ---
@@ -69,7 +69,7 @@ income <- income |>
   
 ```
 
-Our next step was to pivot our data to a long format where we will have a single column for our variable of interest, meaning that each observation will have as its variables: Country, Year, and Variable of Interest (income or child_mortality). This format will make our data easier to join as well as making it easier to filter out our specified years. Given the extrapolation in our data set, we will limit our observations to the period of 1800-2023, removing all future speculative entries. After this step, we are left with two much longer data sets, as each country will now have 2023 observations, one for each year. 
+Our next step was to pivot our data to a long format where we will have a single column for our variable of interest, meaning that each observation will have as its variables: Country, Year, and Variable of Interest (income or child mortality). This format will make our data easier to join as well as making it easier to filter out our specified years. Given the extrapolation in our data set, we will limit our observations to the period of 1800-2023, removing all future speculative entries. After this step, we are left with two much longer data sets, as each country will now have 2023 observations, one for each year. 
 
 
 # Section 1.3: Joining Datasets
@@ -109,3 +109,13 @@ animate(time,renderer=gifski_renderer())
 ```
 
 #Section 2.2: Linear Regression:
+
+```{r}
+mod_data <- data |>
+  filter(year>=2000) |>
+  group_by(country) |>
+  summarise(avg_mortality=mean(child_mortality),avg_income=mean(daily_income)) 
+mod <- lm(avg_mortality~avg_income, data=mod_data)
+summary(mod)
+```
+$$mortality=58.486 + -1.037  income + \epsilon$$
