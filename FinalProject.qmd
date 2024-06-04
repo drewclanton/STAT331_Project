@@ -108,7 +108,7 @@ time<- data |>
 animate(time,renderer=gifski_renderer())
 ```
 
-#Section 2.2: Linear Regression:
+# Section 2.2: Linear Regression:
 
 ```{r}
 mod_data <- data |>
@@ -119,3 +119,14 @@ mod <- lm(avg_mortality~avg_income, data=mod_data)
 summary(mod)
 ```
 $$mortality=58.486 + -1.037  income + \epsilon$$
+Intepretation of Coefficients: 
+
+ * $\beta_0$: when daily average income equals 0 in a country, on average child mortality rate per 1000 babies born will be 58.486. 
+ * $\beta_0$: If daily average income in a country increases by 1 2017 U.S. dollar, then child mortality rate will decrease by 1.037 on average.
+ 
+# Section 2.3: Model Fit
+
+```{r}
+
+```
+
