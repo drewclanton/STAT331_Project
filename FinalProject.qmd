@@ -118,11 +118,11 @@ mod_data <- data |>
   filter(year>=2000) |>
   group_by(country) |>
   summarise(avg_mortality=mean(child_mortality),avg_income=mean(daily_income)) 
-mod <- lm(avg_mortality~avg_income, data=mod_data)
+mod <- lm(avg_mortality~log(avg_income), data=mod_data)
 summary(mod)
 ```
 $$mortality=58.486 + -1.037  income + \epsilon$$
-Intepretation of Coefficients: 
+Interpretation of Coefficients: 
 
  * $\beta_0$: when daily average income equals 0 in a country, on average child mortality rate per 1000 babies born will be 58.486. 
  * $\beta_0$: If daily average income in a country increases by 1 2017 U.S. dollar, then child mortality rate will decrease by 1.037 on average.
@@ -150,3 +150,11 @@ kable(variances, format = "html") |>
 
 ```
   The r-squared value represents the proportion of the variability in the response variable that is explained by the explanatory variable. In our model, the r-squared value is 0.3229, which means that approximately 32.29% of the variability in child mortality rates is explained by the average daily income of the country for that year. This indicates that our model explains a statistically significant portion of the variability, supporting our hypothesis that there is an inverse relationship between child mortality rates and average daily income albeit moderately weak. However, it also indicates that there is still a substantial amount of variability (67.71%) that is not explained by the model, suggesting that other factors also play an important role in determining child mortality rates that are not represented in the relationship between these two variables.
+  
+  
+# Section 3.1: 
+
+```{r}
+
+```
+
