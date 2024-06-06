@@ -115,9 +115,17 @@ animate(time,renderer=gifski_renderer())
 
 ```{r}
 mod_data <- data |>
-  filter(year>=2000) |>
   group_by(country) |>
   summarise(avg_mortality=mean(child_mortality),avg_income=mean(daily_income)) 
+
+mod_data |>
+  ggplot(mapping=aes(y=avg_mortality,x=avg_income)) +
+  geom_point(color='steelblue') +
+  theme_classic() +
+  labs(title = "Child Mortality vs. Daily Income",
+       x = "Daily Income",
+       y = "Child Mortality")
+
 mod <- lm(avg_mortality~log(avg_income), data=mod_data)
 summary(mod)
 ```
@@ -155,6 +163,85 @@ kable(variances, format = "html") |>
 # Section 3.1: 
 
 ```{r}
+pred_mod <- predict(mod)
+est_sigma <- summary(mod)$sigma
+```
+
+```{r}
+rand_error <- function(x, mean = 0, sd){
+  
+  errors <- rnorm(length(x), mean = mean, sd = sd)
+  x_with_error <- x + errors
+  
+  return(x_with_error)
+  
+}
+```
+
+```{r}
+sim_response <- tibble(sim_mod = rand_error(pred_mod,
+                                            sd = est_sigma),)
+```
+
+```{r}
+full_data <- mod_data |> 
+  select(avg_mortality, avg_income) |> 
+  bind_cols(sim_response)
+```
+
+
+```{r}
+full_data |>
+  ggplot(mapping=aes(y=sim_mod,x=avg_income)) +
+  geom_point(color='steelblue') +
+  theme_classic() +
+  labs(title = "Predicted Child Mortality vs. Daily Income",
+       x = "Daily Income",
+       y = "Child Mortality")
+mod_data |>
+  ggplot(mapping=aes(y=avg_mortality,x=avg_income)) +
+  geom_point(color='steelblue') +
+  theme_classic() +
+  labs(title = "Child Mortality vs. Daily Income",
+       x = "Daily Income",
+       y = "Child Mortality")
+
+```
+
+# Section 3.2: Generating Multiple Predictive Checks 
+
+```{r}
+# Function to run a regression and extract R-squared value
+run_simulation <- function(pred_mod, est_sigma, mod_data) {
+  # Generate simulated response
+  sim_mod <- rand_error(pred_mod, sd = est_sigma)
+  
+  # Remove NAs and bind with observed data
+  full_data <- mod_data %>% 
+    select(avg_mortality, avg_income) %>% 
+    bind_cols(tibble(sim_mod = sim_mod)) %>%
+    na.omit()
+  
+  # Fit the regression model
+  sim_lm <- lm(avg_mortality ~ sim_mod, data = full_data)
+  
+  # Return the R-squared value
+  summary(sim_lm)$r.squared
+}
+```
+
+```{r}
+r_squared_values <- map_dbl(1:1000, ~ run_simulation(pred_mod, est_sigma, mod_data))
+r_squared_df <- tibble(r_squared = r_squared_values)
+```
+
+```{r}
+ggplot(r_squared_df, aes(x = r_squared)) +
+  geom_histogram(binwidth = 0.01, fill = 'steelblue', color = 'black') +
+  theme_classic() +
+  labs(title = "Distribution of R^2 Values from Simulated Regressions",
+       x = "R^2 Value",
+       y = "Frequency")
 
 ```
 
