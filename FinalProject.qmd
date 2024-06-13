@@ -249,3 +249,7 @@ ggplot(r_squared_df, aes(x = r_squared)) +
 
 ```
 Our simulated $R^2$ values follow a normal distribution, which should be expected given that we added normally distributed random error. It is centered around a $R^2$ of .2, meaning that on average our simulated data sets derived from our regression explains 20% of the variability in our observed data. when creating simulated data sets, our regression leaves 80% of the variability in our original data unexplained.
+
+# Conlusion
+
+The hypothetized relationship explored in this report was the relationship between average daily income and child mortality across 185 countries. We suspected that as average daily income increased, child mortality would decrease. In order to test this relationship, we created a linear regression model, and found a negative relationship between the two variables.
