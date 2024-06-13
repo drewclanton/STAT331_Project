@@ -21,7 +21,7 @@ library(gganimate)
 library(gifski)
 library(knitr)
 library(kableExtra)
-
+library(gridExtra)
 ```
  **Data and Variable Descriptions**:
  
@@ -47,11 +47,7 @@ sum(is.na(child_mortality))
 ```
 We found that our daily income data set (income) has zero missing values, but our child mortality data set is missing 1800 entries. 
 
-```{r}
-child_mortality |>
-  slice(1:5)
-```
-We investigated the nature of our missing values, learning that they are not random, but rather some countries do not have any values for any years. These countries cannot be included because we need at least some entries to perform analysis on, so we will ommit them.
+We investigated the nature of our missing values, learning that they are not random, but rather some countries do not have any values for any years. These countries cannot be included because we need at least some entries to perform analysis on, so we will ommit them from our analysis. 
 
 ```{r}
 #data cleaning on child mortality data set
@@ -83,7 +79,7 @@ data <- child_mortality |>
                             year==year))
 ```
 
-In combining our data sets, we chose to only include entries that were present in the child mortality dataset with no missing values. Since our income data set has no missing values, we will not have to worry about any NAs in our data. We ended up with 185 countries in our final data set, meaning that we only removed 12 countries from the set for the reason of having no data about child_mortality. 
+In combining our data sets, we chose to only include entries that were present in the child mortality dataset with no missing values. Since our income data set has no missing values, we will not have to worry about any NAs in our data. We ended up with 185 countries in our final data set, meaning that we only removed 12 countries from the set for the reason of having no data about child mortality. As these countries have zero entries, it would be impossible to test our hypothesized relationship so we require countries with enough data to interpret.
 
 # Section 2.1: Data Visualization 
 Our first data visualization is a scatterplot that explores the relationship of child mortality and daily income over time. Each point on the plot represents a country's child mortality rate and daily income for an individual year. We do not see an exactly linear relationship, rather a slightly parabolic curve as child mortality rate decreases as daily income increases. There are few real outliers in this data, as most points are packed very tightly together.
@@ -123,11 +119,11 @@ mod_data |>
   geom_point(color='steelblue') +
   theme_classic() +
   labs(title = "Child Mortality vs. Daily Income",
-       x = "Daily Income",
-       y = "Child Mortality")
+       x = "Daily Income (2017 USD)",
+       subtitle = "Child Mortality (per 1000 born)",
+       y="")
 
 mod <- lm(avg_mortality~log(avg_income), data=mod_data)
-summary(mod)
 ```
 $$mortality=58.486 + -1.037  income + \epsilon$$
 Interpretation of Coefficients: 
@@ -162,6 +158,7 @@ kable(variances, format = "html") |>
   
 # Section 3.1: 
 
+
 ```{r}
 pred_mod <- predict(mod)
 est_sigma <- summary(mod)$sigma
@@ -189,24 +186,29 @@ full_data <- mod_data |>
   bind_cols(sim_response)
 ```
 
+Using our linear regression model, we generated predictions for child mortality and added random error to them. below is the side by side plots of our simulated response on the left and our acutal data on the right.
 
 ```{r}
-full_data |>
+plot1 <- full_data |>
   ggplot(mapping=aes(y=sim_mod,x=avg_income)) +
   geom_point(color='steelblue') +
   theme_classic() +
-  labs(title = "Predicted Child Mortality vs. Daily Income",
-       x = "Daily Income",
-       y = "Child Mortality")
-mod_data |>
+  labs(title = "Simulated Response vs. Daily Income",
+       x = "Daily Income (2017 USD)",
+       subtitle = "Child Mortality (per 1000 born)",
+       y="")
+plot2 <- mod_data |>
   ggplot(mapping=aes(y=avg_mortality,x=avg_income)) +
   geom_point(color='steelblue') +
   theme_classic() +
   labs(title = "Child Mortality vs. Daily Income",
-       x = "Daily Income",
-       y = "Child Mortality")
-
+       x = "Daily Income (2017 USD)",
+       subtitle  = "Child Mortality (per 1000 born)",
+       y = ""
+       )
+grid.arrange(plot1, plot2, ncol = 2)
 ```
+Our Simulated data and our actual observations follow a similar downward slopping pattern, with our observations being more concentrated around low daily income and high child mortality. One of the main differences between our simulated and observed is that our actual observations have some outliers with both a very high average daily income and high child mortality rate. Overall, our simulated data ligns up very well with our observed data. But, to see if our model holds up, we will generate one thousand simulated datasets to perform predictive checks.
 
 # Section 3.2: Generating Multiple Predictive Checks 
 
@@ -235,6 +237,8 @@ r_squared_values <- map_dbl(1:1000, ~ run_simulation(pred_mod, est_sigma, mod_da
 r_squared_df <- tibble(r_squared = r_squared_values)
 ```
 
+We generated 1000 simulated data sets in order to see if they could have been observed based on our regression model. We then regressed our observed dataset against each simulated response, then took the $R^2$ value from each regression and plotted them below:
+
 ```{r}
 ggplot(r_squared_df, aes(x = r_squared)) +
   geom_histogram(binwidth = 0.01, fill = 'steelblue', color = 'black') +
@@ -244,4 +248,4 @@ ggplot(r_squared_df, aes(x = r_squared)) +
        y = "Frequency")
 
 ```
-
+Our simulated $R^2$ values follow a normal distribution, which should be expected given that we added normally distributed random error. It is centered around a $R^2$ of .2, meaning that on average our simulated data sets derived from our regression explains 20% of the variability in our observed data. when creating simulated data sets, our regression leaves 80% of the variability in our original data unexplained.
