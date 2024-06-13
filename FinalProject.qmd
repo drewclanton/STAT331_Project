@@ -71,7 +71,7 @@ income <- income |>
 Our next step was to pivot our data to a long format where we will have a single column for our variable of interest, meaning that each observation will have as its variables: Country, Year, and Variable of Interest (income or child mortality). This format will make our data easier to join as well as making it easier to filter out our specified years. Given the extrapolation in our data set, we will limit our observations to the period of 1800-2023, removing all future speculative entries. After this step, we are left with two much longer data sets, as each country will now have 2023 observations, one for each year. 
 
 
-# Section 1.3: Joining Datasets
+# Section 1.2: Joining Datasets
 
 ```{r}
 data <- child_mortality |>
@@ -252,4 +252,10 @@ Our simulated $R^2$ values follow a normal distribution, which should be expecte
 
 # Conlusion
 
-The hypothetized relationship explored in this report was the relationship between average daily income and child mortality across 185 countries. We suspected that as average daily income increased, child mortality would decrease. In order to test this relationship, we created a linear regression model, and found a negative relationship between the two variables.
+The hypothetized relationship explored in this report was the relationship between average daily income and child mortality across 185 countries. We suspected that as average daily income increased, child mortality would decrease. In order to test this relationship, we created a linear regression model, and found a negative relationship between the two variables. When performing our predictive checks, we found that our model did a poor job of creating simulated data sets similar to our observed data, but that is likely due to the prescence of outliers within our observed data set that our model would not produce. There is also many other confounding variables within this relationship that could be explored further, such as how much a country spends on healthcare or the number of babies born per country.
+
+# Works Cited
+
+https://www.gapminder.org/data/ 
+
+
